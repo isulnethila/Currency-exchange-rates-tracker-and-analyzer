@@ -26,6 +26,11 @@ app.get("/getAllCurrencies",async(req,res)=>{
     }
 });
 
+//get target amount
+app.get("/convert",(req,res)=>{
+    const{date, sourceCurrency,targetCurrency,amountInSourceCurrency}=req.query;
+})
+
 app.listen(5000,()=>{
     console.log("Server is running on port 5000");
 })
