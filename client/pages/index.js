@@ -15,6 +15,7 @@ export default function Home() {
   const [amountInTargetCurrency,setAmountIntargetCurrency]=useState(0);
 
   const [currencyNames,setCurrencyNames]=useState([]);
+  const [loading,setLoading]=useState(true);
 
   const handleSubmit =async(e)=>{
     e.preventDefault();
@@ -29,6 +30,7 @@ export default function Home() {
       });
 
       setAmountIntargetCurrency(responce.data);
+      setLoading(false);
     }
     catch(err){
       console.error(err)
@@ -127,12 +129,13 @@ export default function Home() {
             </form>
           </section>
         </div>
-        <div className="mt-5  font-bold text-center  lg:mx-32 ">
+        {!loading ?<div className="mt-5  font-bold text-center  lg:mx-32 ">
           {amountInSourceCurrency} {currencyNames[sourceCurrency]} is equal to {" "}
           <span className="text-green-500 font-bold "> {amountInTargetCurrency} </span>
           in {currencyNames[targetCurrency]}
           
-        </div>
+        </div>: null}
+        
       </main>
     </div>
   );
