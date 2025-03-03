@@ -1,6 +1,7 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Head from 'next/head';
+import axios from "axios";
 
 
 export default function Home() {
@@ -13,6 +14,8 @@ export default function Home() {
   const [amountInSourceCurrency,setAmountInSourceCurrency]=useState(0);
   const [amountInTargetCurrency,setAmountIntargetCurrency]=useState(0);
 
+  const [currencyNames,setCurrencyNames]=useState([]);
+
   const handleSubmit =(e)=>{
     e.preventDefault();
     console.log(
@@ -22,6 +25,22 @@ export default function Home() {
       amountInSourceCurrency
     )
   }
+
+  //get all currency names
+  useEffect(()=>{
+    const getCurrencyNames = async()=>{
+      try{
+        const responce=await axios.get(
+          "http://localhost:5000/getAllCurrencies"
+        );
+        setCurrencyNames(responce.data);
+      }
+      catch(err){
+        console.error(err);
+      }
+    }
+     getCurrencyNames(); 
+  },[])
   return (
     <div>
       <Head>
@@ -59,6 +78,11 @@ export default function Home() {
                 id={sourceCurrency} 
                 value={sourceCurrency}className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                   <option>select a source Currency</option>
+                  {Object.keys(currencyNames).map((currency)=>(
+                    <option className="p-1" key={currency} value={currency}>
+                      {currencyNames[currency]}
+                    </option>
+                  ))}
 
                 </select>
               </div>
@@ -71,6 +95,12 @@ export default function Home() {
                 id={targetCurrency}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                   <option>select a target Currency</option>
+
+                  {Object.keys(currencyNames).map((currency)=>(
+                    <option className="p-1" key={currency} value={currency}>
+                      {currencyNames[currency]}
+                    </option>
+                  ))}
 
                 </select>
               </div>
