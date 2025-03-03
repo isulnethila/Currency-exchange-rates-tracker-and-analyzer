@@ -10,7 +10,10 @@ module.exports = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-      },
+      }, 
+      fontFamily:{
+        poppins:['poppins','sans-serif']
+      }
     },
   },
   plugins: [],
