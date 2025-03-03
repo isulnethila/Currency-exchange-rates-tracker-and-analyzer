@@ -26,7 +26,9 @@ export default function Home() {
           targetCurrency,
           amountInSourceCurrency
         },
-      })
+      });
+
+      setAmountIntargetCurrency(responce.data);
     }
     catch(err){
       console.error(err)
@@ -124,6 +126,12 @@ export default function Home() {
               <button className="bg-green-700 hover:bg-green-900 text-white  px-4 py-2 my-4 rounded-lg">Get the target currency</button>
             </form>
           </section>
+        </div>
+        <div className="mt-5  font-bold text-center  lg:mx-32 ">
+          {amountInSourceCurrency} {currencyNames[sourceCurrency]} is equal to {" "}
+          <span className="text-green-500 font-bold "> {amountInTargetCurrency} </span>
+          in {currencyNames[targetCurrency]}
+          
         </div>
       </main>
     </div>
